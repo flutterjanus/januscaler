@@ -1,6 +1,8 @@
 package main
-import "networking/networking"
+import (
+	"fmt"
+	"github.com/januscaler/networking"
+)
 func main()  {
-	TestNetworking();
-
+	TestIt()
 }
