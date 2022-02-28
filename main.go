@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"github.com/gorilla/websocket"
+	"github.com/flutterjanus/januscaler/networking"
 )
 
 var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
@@ -24,7 +25,9 @@ type Connection struct{
 	onMessage onMessageCallBack
 	close chan bool
 }
-
+func (conn *Connection) bindOnMessage(onMessage onMessageCallBack){
+	conn.onMessage=onMessage;
+}
 func handleClient(connection *Connection){
 	var err error
 	connection.conn,err=upgrader.Upgrade(connection.response,connection.request,nil)
@@ -39,7 +42,9 @@ func handleClient(connection *Connection){
 			log.Println("read:", err)
 			break
 		}
-		connection.onMessage(string(message))
+		if(connection.onMessage!=nil){
+			connection.onMessage(string(message))
+		}
 		closeIt:=<-connection.close
 		if(closeIt){
 			break;
@@ -56,12 +61,14 @@ var connections map[string]*Connection= make(map[string]*Connection)
 func home(response http.ResponseWriter,request *http.Request){
 	connections[request.RemoteAddr]=&Connection{request: request,
 		close: make(chan bool),
-		response: response,onMessage:func(msg string) {
+		response: response};
+	connections[request.RemoteAddr].bindOnMessage(func(msg string) {
 		fmt.Println(msg)
 		connections[request.RemoteAddr].conn.WriteMessage(1,[]byte(msg))
-
-	}};
+	})	
 	go handleClient(connections[request.RemoteAddr])
+	fmt.Println(connections)
+	fmt.Println(networking.GetOutboundIP().String())
 	<-connections[request.RemoteAddr].close
 }
 func main()  {
