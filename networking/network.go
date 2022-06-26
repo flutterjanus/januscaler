@@ -1,21 +1,18 @@
 package networking
 
 import (
-	"fmt"
 	"log"
 	"net"
 )
-func TestIt(){
-fmt.Printf("hbdshb")
-}
+
 func GetOutboundIP() net.IP {
-    conn, err := net.Dial("udp", "8.8.8.8:80")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer conn.Close()
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
 
-    localAddr := conn.LocalAddr().(*net.UDPAddr)
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
 
-    return localAddr.IP
+	return localAddr.IP
 }
