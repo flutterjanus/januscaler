@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	. "github.com/flutterjanus/januscaler/socket_client"
+	. "github.com/flutterjanus/januscaler/socket_server"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
-	"os"
+	// "os"
 )
 
 var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
@@ -75,10 +77,14 @@ func home(response http.ResponseWriter, request *http.Request) {
 	<-connections[request.RemoteAddr].close
 }
 func main() {
-	// http.HandleFunc("/echo", echo)
-	flag.NewFlagSet("foo", flag.ExitOnError)
-	fmt.Println(os.Args[1])
-	fmt.Println(*mode)
-	http.HandleFunc("/websocket", home)
-	log.Fatal(http.ListenAndServe(*addr, nil))
+	ss := MakeSocketServer()
+	ss.Listen("tcp", "0.0.0.0:8081")
+	ss.OnAuthorization(func(msg string, client *SocketServerClient) bool {
+		return true
+	})
+	ss.OnMessage(func(msg string, client *SocketServerClient) {
+		ss.Broadcast(fmt.Sprintf("client:%s sent:- %s", client.GetConn().RemoteAddr(), msg))
+	})
+	ss.AcceptConnections()
+
 }

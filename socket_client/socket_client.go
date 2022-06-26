@@ -9,6 +9,11 @@ type SocketServerClient struct {
 }
 
 func (client *SocketServerClient) Send(msg string) {
-	(*client.conn).Write([]byte(msg + "\n"))
-
+	(*client.conn).Write([]byte(msg))
+}
+func (client *SocketServerClient) GetConn() net.Conn {
+	return *client.conn
+}
+func (client *SocketServerClient) SetConn(conn *net.Conn) {
+	client.conn = conn
 }
