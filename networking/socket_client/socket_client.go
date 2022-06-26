@@ -1,4 +1,4 @@
-package socketclient
+package socket_client
 
 import (
 	"net"

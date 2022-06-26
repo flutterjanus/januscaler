@@ -1,4 +1,4 @@
-package socketserver
+package socket_server
 
 import (
 	"bufio"
@@ -15,16 +15,16 @@ const (
 	connType = "tcp"
 )
 
-func main() {
-	ss := MakeSocketServer()
-	ss.Listen(connType, "0.0.0.0:8081")
-	ss.OnMessage(func(msg string, client *SocketServerClient) {
-		fmt.Println(msg)
-		client.Send("djfn")
-	})
-	ss.AcceptConnections()
+// func main() {
+// 	ss := MakeSocketServer()
+// 	ss.Listen(connType, "0.0.0.0:8081")
+// 	ss.OnMessage(func(msg string, client *SocketServerClient) {
+// 		fmt.Println(msg)
+// 		client.Send("djfn")
+// 	})
+// 	ss.AcceptConnections()
 
-}
+// }
 
 func handleClients(server *SocketServer, client *SocketServerClient) {
 	for {
