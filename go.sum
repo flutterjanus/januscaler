@@ -1,4 +1,2 @@
-github.com/flutterjanus/januscaler/networking v0.0.0-20220626215939-d9e84588a42c h1:yeP76j860J9adtJknfFMUB+LavOdpKCHsK8TrGGWk2w=
-github.com/flutterjanus/januscaler/networking v0.0.0-20220626215939-d9e84588a42c/go.mod h1:/t9rk75nS8+O7M1C0MJbo5jDp+sDZ6mkYpSOKB5JNz4=
 github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=

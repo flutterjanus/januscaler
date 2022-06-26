@@ -71,7 +71,7 @@ func home(response http.ResponseWriter, request *http.Request) {
 	})
 	go handleClient(connections[request.RemoteAddr])
 	fmt.Println(connections)
-	fmt.Println(networking.GetOutboundIP().String())
+	// fmt.Println(networking.GetOutboundIP().String())
 	<-connections[request.RemoteAddr].close
 }
 func main() {
