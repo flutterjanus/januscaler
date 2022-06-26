@@ -1,9 +1,9 @@
-package socket_server
+package networking
 
 import (
 	"bufio"
 	"fmt"
-	"github.com/flutterjanus/januscaler/networking/socket_client"
+	"github.com/flutterjanus/januscaler/networking"
 	// "log"
 	"net"
 	// "os"
